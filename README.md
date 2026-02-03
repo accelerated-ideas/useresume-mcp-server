@@ -66,19 +66,19 @@ Then configure:
 
 ### Resume Tools
 
-| Tool                     | Credits | Description                                          |
-| ------------------------ | ------- | ---------------------------------------------------- |
-| `create_resume`          | 1       | Generate PDF resume from structured content          |
-| `parse_resume`           | 4       | Parse existing resume (PDF/DOCX) into JSON/markdown  |
-| `create_tailored_resume` | 5       | Generate resume optimized for a specific job posting |
+| Tool                     | Credits | Description                                                                    |
+| ------------------------ | ------- | ------------------------------------------------------------------------------ |
+| `create_resume`          | 1       | Generate PDF resume from structured content                                    |
+| `parse_resume`           | 4       | Parse existing resume (PDF / DOCX / PNG / JPG / JPEG /WEBP) into JSON/markdown |
+| `create_tailored_resume` | 5       | Generate resume optimized for a specific job posting                           |
 
 ### Cover Letter Tools
 
-| Tool                           | Credits | Description                                                |
-| ------------------------------ | ------- | ---------------------------------------------------------- |
-| `create_cover_letter`          | 1       | Generate PDF cover letter from structured content          |
-| `parse_cover_letter`           | 4       | Parse existing cover letter (PDF/DOCX) into JSON/markdown  |
-| `create_tailored_cover_letter` | 5       | Generate cover letter optimized for a specific job posting |
+| Tool                           | Credits | Description                                                                          |
+| ------------------------------ | ------- | ------------------------------------------------------------------------------------ |
+| `create_cover_letter`          | 1       | Generate PDF cover letter from structured content                                    |
+| `parse_cover_letter`           | 4       | Parse existing cover letter (PDF / DOCX / PNG / JPG / JPEG /WEBP) into JSON/markdown |
+| `create_tailored_cover_letter` | 5       | Generate cover letter optimized for a specific job posting                           |
 
 ### Utility Tools
 
