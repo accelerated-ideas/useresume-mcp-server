@@ -2,7 +2,9 @@
 
 MCP (Model Context Protocol) server for AI-powered resume and cover letter generation via the [UseResume API](https://useresume.ai/resume-generation-api).
 
-This package allows AI agents like Claude to generate professional PDF resumes and cover letters through natural conversation.
+This package allows AI agents to generate professional PDF resumes and cover letters through natural conversation.
+
+**Compatible with:** Claude Desktop, Claude Code, Cursor, Windsurf, Cline, and other MCP-compatible clients.
 
 ## Features
 
@@ -135,7 +137,15 @@ Once configured, you can ask Claude to:
 
 ### Claude Code
 
-`~/.config/claude-code/settings.json`
+`~/.claude/settings.json`
+
+### Cursor
+
+`~/.cursor/mcp.json`
+
+### Other MCP Clients
+
+Check your client's documentation for the MCP configuration file location. The configuration format is the same across all clients.
 
 ## Response Format
 
