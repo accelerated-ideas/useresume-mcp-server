@@ -27,7 +27,7 @@ No installation required. Configure Claude Desktop or Claude Code to use npx:
       "command": "npx",
       "args": ["-y", "@useresume/mcp-server"],
       "env": {
-        "RESUME_API_KEY": "ur_your_api_key"
+        "USERESUME_API_KEY": "ur_xxxxx"
       }
     }
   }
@@ -48,7 +48,7 @@ Then configure:
     "useresume": {
       "command": "useresume-mcp",
       "env": {
-        "RESUME_API_KEY": "ur_your_api_key"
+        "USERESUME_API_KEY": "ur_xxxxx"
       }
     }
   }
@@ -120,10 +120,10 @@ Once configured, you can ask Claude to:
 
 ## Environment Variables
 
-| Variable              | Required | Description                                                  |
-| --------------------- | -------- | ------------------------------------------------------------ |
-| `RESUME_API_KEY`      | Yes      | Your UseResume API key (starts with `ur_`)                   |
-| `RESUME_API_BASE_URL` | No       | Custom API base URL (default: `https://useresume.ai/api/v3`) |
+| Variable                 | Required | Description                                                  |
+| ------------------------ | -------- | ------------------------------------------------------------ |
+| `USERESUME_API_KEY`      | Yes      | Your UseResume API key (starts with `ur_`)                   |
+| `USERESUME_API_BASE_URL` | No       | Custom API base URL (default: `https://useresume.ai/api/v3`) |
 
 ## Configuration Locations
 
@@ -195,7 +195,7 @@ npm install
 npm run build
 
 # Test locally
-RESUME_API_KEY=ur_test node dist/index.js
+USERESUME_API_KEY=ur_test node dist/index.js
 ```
 
 ## License

@@ -1,8 +1,22 @@
 import { ApiError, ConfigurationError } from "./errors.js";
-import type { CreateResumeRequest, TailoredResumeRequest, CreateResumeResponse } from "./schemas/tailored-resume.js";
-import type { ParseResumeRequest, ParseResumeResponse } from "./schemas/parse-resume.js";
-import type { CreateCoverLetterRequest, TailoredCoverLetterRequest, CreateCoverLetterResponse } from "./schemas/tailored-cover-letter.js";
-import type { ParseCoverLetterRequest, ParseCoverLetterResponse } from "./schemas/parse-cover-letter.js";
+import type {
+  CreateResumeRequest,
+  TailoredResumeRequest,
+  CreateResumeResponse,
+} from "./schemas/tailored-resume.js";
+import type {
+  ParseResumeRequest,
+  ParseResumeResponse,
+} from "./schemas/parse-resume.js";
+import type {
+  CreateCoverLetterRequest,
+  TailoredCoverLetterRequest,
+  CreateCoverLetterResponse,
+} from "./schemas/tailored-cover-letter.js";
+import type {
+  ParseCoverLetterRequest,
+  ParseCoverLetterResponse,
+} from "./schemas/parse-cover-letter.js";
 import type { GetRunRequest, GetRunResponse } from "./schemas/get-run.js";
 
 const DEFAULT_BASE_URL = "https://useresume.ai/api/v3";
@@ -12,10 +26,10 @@ export class ResumeApiClient {
   private baseUrl: string;
 
   constructor() {
-    const apiKey = process.env.RESUME_API_KEY;
+    const apiKey = process.env.USERESUME_API_KEY;
     if (!apiKey) {
       throw new ConfigurationError(
-        "RESUME_API_KEY environment variable is required. Get your API key at https://useresume.ai/account/api-platform"
+        "USERESUME_API_KEY environment variable is required. Get your API key at https://useresume.ai/account/api-platform"
       );
     }
     if (!apiKey.startsWith("ur_")) {
@@ -24,11 +38,13 @@ export class ResumeApiClient {
       );
     }
     this.apiKey = apiKey;
-    this.baseUrl = process.env.RESUME_API_BASE_URL || DEFAULT_BASE_URL;
+    this.baseUrl = process.env.USERESUME_API_BASE_URL || DEFAULT_BASE_URL;
   }
 
   // Resume endpoints
-  async createResume(input: CreateResumeRequest): Promise<CreateResumeResponse> {
+  async createResume(
+    input: CreateResumeRequest
+  ): Promise<CreateResumeResponse> {
     return this.request<CreateResumeResponse>("/resume/create", input);
   }
 
@@ -36,21 +52,35 @@ export class ResumeApiClient {
     return this.request<ParseResumeResponse>("/resume/parse", input);
   }
 
-  async createTailoredResume(input: TailoredResumeRequest): Promise<CreateResumeResponse> {
+  async createTailoredResume(
+    input: TailoredResumeRequest
+  ): Promise<CreateResumeResponse> {
     return this.request<CreateResumeResponse>("/resume/create-tailored", input);
   }
 
   // Cover letter endpoints
-  async createCoverLetter(input: CreateCoverLetterRequest): Promise<CreateCoverLetterResponse> {
-    return this.request<CreateCoverLetterResponse>("/cover-letter/create", input);
+  async createCoverLetter(
+    input: CreateCoverLetterRequest
+  ): Promise<CreateCoverLetterResponse> {
+    return this.request<CreateCoverLetterResponse>(
+      "/cover-letter/create",
+      input
+    );
   }
 
-  async parseCoverLetter(input: ParseCoverLetterRequest): Promise<ParseCoverLetterResponse> {
+  async parseCoverLetter(
+    input: ParseCoverLetterRequest
+  ): Promise<ParseCoverLetterResponse> {
     return this.request<ParseCoverLetterResponse>("/cover-letter/parse", input);
   }
 
-  async createTailoredCoverLetter(input: TailoredCoverLetterRequest): Promise<CreateCoverLetterResponse> {
-    return this.request<CreateCoverLetterResponse>("/cover-letter/create-tailored", input);
+  async createTailoredCoverLetter(
+    input: TailoredCoverLetterRequest
+  ): Promise<CreateCoverLetterResponse> {
+    return this.request<CreateCoverLetterResponse>(
+      "/cover-letter/create-tailored",
+      input
+    );
   }
 
   // Run status endpoint
