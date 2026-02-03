@@ -1,0 +1,49 @@
+{
+  "name": "@useresume/mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for AI-powered resume and cover letter generation via useresume.ai API",
+  "type": "module",
+  "main": "./dist/index.js",
+  "bin": {
+    "useresume-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test:drift": "tsc -p src/scripts/tsconfig.drift.json",
+    "prebuild": "npm run test:drift",
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "resume",
+    "cover-letter",
+    "ai",
+    "claude",
+    "anthropic"
+  ],
+  "author": "UseResume",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "nanoid": "^5.0.9",
+    "zod": "^3.24.1",
+    "zod-to-json-schema": "^3.24.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.7.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/accelerated-ideas/useresume-mcp-server"
+  }
+}
