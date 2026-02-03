@@ -22,54 +22,68 @@ const server = new McpServer({
 });
 
 // Register resume tools
-server.tool(
+server.registerTool(
   createResumeTool.name,
-  createResumeTool.description,
-  createResumeTool.inputSchema,
+  {
+    description: createResumeTool.description,
+    inputSchema: createResumeTool.inputSchema,
+  },
   createResumeTool.handler
 );
 
-server.tool(
+server.registerTool(
   parseResumeTool.name,
-  parseResumeTool.description,
-  parseResumeTool.inputSchema,
+  {
+    description: parseResumeTool.description,
+    inputSchema: parseResumeTool.inputSchema,
+  },
   parseResumeTool.handler
 );
 
-server.tool(
+server.registerTool(
   createTailoredResumeTool.name,
-  createTailoredResumeTool.description,
-  createTailoredResumeTool.inputSchema,
+  {
+    description: createTailoredResumeTool.description,
+    inputSchema: createTailoredResumeTool.inputSchema,
+  },
   createTailoredResumeTool.handler
 );
 
 // Register cover letter tools
-server.tool(
+server.registerTool(
   createCoverLetterTool.name,
-  createCoverLetterTool.description,
-  createCoverLetterTool.inputSchema,
+  {
+    description: createCoverLetterTool.description,
+    inputSchema: createCoverLetterTool.inputSchema,
+  },
   createCoverLetterTool.handler
 );
 
-server.tool(
+server.registerTool(
   parseCoverLetterTool.name,
-  parseCoverLetterTool.description,
-  parseCoverLetterTool.inputSchema,
+  {
+    description: parseCoverLetterTool.description,
+    inputSchema: parseCoverLetterTool.inputSchema,
+  },
   parseCoverLetterTool.handler
 );
 
-server.tool(
+server.registerTool(
   createTailoredCoverLetterTool.name,
-  createTailoredCoverLetterTool.description,
-  createTailoredCoverLetterTool.inputSchema,
+  {
+    description: createTailoredCoverLetterTool.description,
+    inputSchema: createTailoredCoverLetterTool.inputSchema,
+  },
   createTailoredCoverLetterTool.handler
 );
 
 // Register run status tool
-server.tool(
+server.registerTool(
   getRunTool.name,
-  getRunTool.description,
-  getRunTool.inputSchema,
+  {
+    description: getRunTool.description,
+    inputSchema: getRunTool.inputSchema,
+  },
   getRunTool.handler
 );
 

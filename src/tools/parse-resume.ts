@@ -1,4 +1,3 @@
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { getApiClient } from "../api-client.js";
 import { formatToolError } from "../errors.js";
 import { schemaParseResumeRequest, type ParseResumeRequest } from "../schemas/parse-resume.js";
@@ -17,10 +16,7 @@ OUTPUT FORMATS:
 - json: Structured data with name, employment, education, skills, etc.
 - markdown: Human-readable markdown format`,
 
-  inputSchema: zodToJsonSchema(schemaParseResumeRequest, {
-    $refStrategy: "none",
-    target: "jsonSchema7",
-  }),
+  inputSchema: schemaParseResumeRequest,
 
   async handler(args: unknown) {
     try {

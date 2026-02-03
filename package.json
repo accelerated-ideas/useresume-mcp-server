@@ -1,6 +1,6 @@
 {
   "name": "@useresume/mcp-server",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "MCP server for AI-powered resume and cover letter generation via useresume.ai API",
   "type": "module",
   "main": "./dist/index.js",
@@ -32,8 +32,7 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0",
     "nanoid": "^5.0.9",
-    "zod": "^3.24.1",
-    "zod-to-json-schema": "^3.24.6"
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",

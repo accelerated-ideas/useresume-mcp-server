@@ -1,4 +1,3 @@
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { getApiClient } from "../api-client.js";
 import { formatToolError } from "../errors.js";
 import { schemaGetRunRequest, type GetRunRequest } from "../schemas/get-run.js";
@@ -19,10 +18,7 @@ RETURNS:
 - file_url: Download URL (only present when status is 'success')
 - credits_used: Credits consumed by the original operation`,
 
-  inputSchema: zodToJsonSchema(schemaGetRunRequest, {
-    $refStrategy: "none",
-    target: "jsonSchema7",
-  }),
+  inputSchema: schemaGetRunRequest,
 
   async handler(args: unknown) {
     try {

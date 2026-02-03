@@ -1,4 +1,3 @@
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { getApiClient } from "../api-client.js";
 import { formatToolError } from "../errors.js";
 import { schemaTailoredResumeRequest, type TailoredResumeRequest } from "../schemas/tailored-resume.js";
@@ -19,10 +18,7 @@ RETURNS: URL to download the generated PDF (valid for 24 hours)
 
 TEMPLATES (17): default, clean, classic, executive, modern-pro, meridian, horizon, atlas, prism, nova, zenith, vantage, summit, quantum, vertex, harvard, lattice`,
 
-  inputSchema: zodToJsonSchema(schemaTailoredResumeRequest, {
-    $refStrategy: "none",
-    target: "jsonSchema7",
-  }),
+  inputSchema: schemaTailoredResumeRequest,
 
   async handler(args: unknown) {
     try {

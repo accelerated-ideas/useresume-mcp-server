@@ -1,4 +1,3 @@
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { getApiClient } from "../api-client.js";
 import { formatToolError } from "../errors.js";
 import { schemaTailoredCoverLetterRequest, type TailoredCoverLetterRequest } from "../schemas/tailored-cover-letter.js";
@@ -20,10 +19,7 @@ RETURNS: URL to download the generated PDF (valid for 24 hours)
 
 TEMPLATES (11): atlas, classic, clean, default, executive, horizon, meridian, modern-pro, nova, prism, zenith`,
 
-  inputSchema: zodToJsonSchema(schemaTailoredCoverLetterRequest, {
-    $refStrategy: "none",
-    target: "jsonSchema7",
-  }),
+  inputSchema: schemaTailoredCoverLetterRequest,
 
   async handler(args: unknown) {
     try {

@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { getApiClient } from "../api-client.js";
 import { formatToolError } from "../errors.js";
 import { schemaCoverLetterContent } from "../schemas/cover-letter-content.js";
@@ -27,10 +26,7 @@ FONTS (9): geist, inter, merryweather, roboto, playfair, lora, jost, manrope, ib
 
 BACKGROUNDS (16): white, cream, pearl, mist, smoke, ash, frost, sage, mint, blush, lavender, sky, sand, stone, linen, ivory`,
 
-  inputSchema: zodToJsonSchema(inputSchema, {
-    $refStrategy: "none",
-    target: "jsonSchema7",
-  }),
+  inputSchema: inputSchema,
 
   async handler(args: unknown) {
     try {

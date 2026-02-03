@@ -1,4 +1,3 @@
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { getApiClient } from "../api-client.js";
 import { formatToolError } from "../errors.js";
 import { schemaParseCoverLetterRequest, type ParseCoverLetterRequest } from "../schemas/parse-cover-letter.js";
@@ -17,10 +16,7 @@ OUTPUT FORMATS:
 - json: Structured data with name, text, hiring_manager_company, etc.
 - markdown: Human-readable markdown format`,
 
-  inputSchema: zodToJsonSchema(schemaParseCoverLetterRequest, {
-    $refStrategy: "none",
-    target: "jsonSchema7",
-  }),
+  inputSchema: schemaParseCoverLetterRequest,
 
   async handler(args: unknown) {
     try {
