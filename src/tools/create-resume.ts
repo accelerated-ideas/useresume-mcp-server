@@ -18,7 +18,7 @@ COST: 1 credit per generation
 
 RETURNS: URL to download the generated PDF (valid for 24 hours)
 
-TEMPLATES (17): default, clean, classic, executive, modern-pro, meridian, horizon, atlas, prism, nova, zenith, vantage, summit, quantum, vertex, harvard, lattice
+TEMPLATES (29): default, clean, classic, executive, modern-pro, meridian, horizon, atlas, prism, nova, zenith, vantage, summit, quantum, vertex, harvard, lattice, strata, cascade, pulse, folio, ridge, verso, ledger, tableau, apex, herald, beacon, onyx
 
 COLORS (32): blue, black, emerald, purple, rose, amber, slate, indigo, teal, burgundy, forest, navy, charcoal, plum, olive, maroon, steel, sapphire, pine, violet, mahogany, sienna, moss, midnight, copper, cobalt, crimson, sage, aqua, coral, graphite, turquoise
 

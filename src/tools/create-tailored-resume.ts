@@ -16,7 +16,7 @@ The AI will:
 
 RETURNS: URL to download the generated PDF (valid for 24 hours)
 
-TEMPLATES (17): default, clean, classic, executive, modern-pro, meridian, horizon, atlas, prism, nova, zenith, vantage, summit, quantum, vertex, harvard, lattice`,
+TEMPLATES (29): default, clean, classic, executive, modern-pro, meridian, horizon, atlas, prism, nova, zenith, vantage, summit, quantum, vertex, harvard, lattice, strata, cascade, pulse, folio, ridge, verso, ledger, tableau, apex, herald, beacon, onyx`,
 
   inputSchema: schemaTailoredResumeRequest,
 

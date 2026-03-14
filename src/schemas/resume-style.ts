@@ -18,7 +18,19 @@ export type Template =
   | "quantum"
   | "vertex"
   | "harvard"
-  | "lattice";
+  | "lattice"
+  | "strata"
+  | "cascade"
+  | "pulse"
+  | "folio"
+  | "ridge"
+  | "verso"
+  | "ledger"
+  | "tableau"
+  | "apex"
+  | "herald"
+  | "beacon"
+  | "onyx";
 
 export type ColorVariant =
   | "blue"
@@ -182,10 +194,22 @@ export const schemaResumeStyle = z
           "vertex" as Template,
           "harvard" as Template,
           "lattice" as Template,
+          "strata" as Template,
+          "cascade" as Template,
+          "pulse" as Template,
+          "folio" as Template,
+          "ridge" as Template,
+          "verso" as Template,
+          "ledger" as Template,
+          "tableau" as Template,
+          "apex" as Template,
+          "herald" as Template,
+          "beacon" as Template,
+          "onyx" as Template,
         ],
         {
           message:
-            "Please select a valid template. (e.g. 'default', 'clean', 'classic', 'executive', 'modern-pro', 'meridian', 'horizon', 'atlas', 'prism', 'nova', 'zenith', 'vantage', 'summit', 'quantum', 'vertex', 'harvard', 'lattice')",
+            "Please select a valid template. (e.g. 'default', 'clean', 'classic', 'executive', 'modern-pro', 'meridian', 'horizon', 'atlas', 'prism', 'nova', 'zenith', 'vantage', 'summit', 'quantum', 'vertex', 'harvard', 'lattice', 'strata', 'cascade', 'pulse', 'folio', 'ridge', 'verso', 'ledger', 'tableau', 'apex', 'herald', 'beacon', 'onyx')",
         }
       )
       .optional()
