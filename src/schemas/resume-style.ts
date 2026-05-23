@@ -95,19 +95,6 @@ export type BackgroundColor =
   | "linen"
   | "ivory";
 
-export type ResumeSectionId =
-  | "personal_details"
-  | "links"
-  | "employment"
-  | "skills"
-  | "education"
-  | "summary"
-  | "certifications"
-  | "languages"
-  | "references"
-  | "projects"
-  | "activities";
-
 export type DocumentLanguage =
   | "en"
   | "es"
@@ -134,40 +121,101 @@ export type ProfilePictureRadius =
   | "rounded-xl"
   | "rounded-none";
 
+const schemaResumeStructureSectionId = z
+  .string({
+    required_error: "Section ID is required",
+    invalid_type_error: "Section ID must be a string",
+  })
+  .max(500, {
+    message: "Section ID cannot exceed 500 characters",
+  })
+  .describe(
+    "Unique identifier for the resume section. Can be one of the predefined sections or a custom section ID"
+  );
+
+const schemaResumeStructurePositionIndex = z
+  .preprocess((value) => {
+    if (value === null || value === undefined) {
+      return undefined;
+    }
+
+    if (typeof value === "string") {
+      const trimmedValue = value.trim();
+
+      if (trimmedValue.length < 1) {
+        return undefined;
+      }
+
+      const parsedValue = Number(trimmedValue);
+      return Number.isNaN(parsedValue) ? value : parsedValue;
+    }
+
+    return value;
+  },
+  z
+    .number({
+      required_error: "Position index is required",
+      invalid_type_error: "Position index must be a number",
+    })
+    .min(0, { message: "Position index must be at least 0" })
+    .max(25, { message: "Position index cannot exceed 25" })
+  )
+  .describe("The position/order index of the section in the resume");
+
+function addDuplicateSectionIdIssues({
+  items,
+  ctx,
+  buildMessage,
+}: {
+  items: Array<{ section_id?: string }>;
+  ctx: z.RefinementCtx;
+  buildMessage: (firstIndex: number) => string;
+}) {
+  const seenSectionIds = new Map<string, number>();
+
+  items.forEach((item, index) => {
+    const sectionId = item.section_id?.trim();
+
+    if (!sectionId) {
+      return;
+    }
+
+    const firstIndex = seenSectionIds.get(sectionId);
+
+    if (firstIndex !== undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [index, "section_id"],
+        message: buildMessage(firstIndex),
+      });
+      return;
+    }
+
+    seenSectionIds.set(sectionId, index);
+  });
+}
+
 export const schemaResumeStyle = z
   .object({
     // #### Resume structure
     resume_structure: z
       .array(
         z.object({
-          section_id: z
-            .union([
-              z.enum([
-                "summary" as ResumeSectionId,
-                "employment" as ResumeSectionId,
-                "skills" as ResumeSectionId,
-                "education" as ResumeSectionId,
-                "certifications" as ResumeSectionId,
-                "languages" as ResumeSectionId,
-                "references" as ResumeSectionId,
-                "projects" as ResumeSectionId,
-                "activities" as ResumeSectionId,
-              ]),
-              z.string().max(250, {
-                message: "Section ID cannot exceed 250 characters",
-              }),
-            ])
-            .describe(
-              "Unique identifier for the resume section. Can be one of the predefined sections or a custom section ID"
-            ),
-          position_index: z.coerce
-            .number()
-            .min(0)
-            .max(25)
-            .describe("The position/order index of the section in the resume"),
+          section_id: schemaResumeStructureSectionId,
+          position_index: schemaResumeStructurePositionIndex,
         })
       )
       .max(25, { message: "Cannot add more than 25 sections" })
+      .superRefine((sections, ctx) => {
+        addDuplicateSectionIdIssues({
+          items: sections,
+          ctx,
+          buildMessage: (firstIndex) =>
+            "Resume structure section IDs must be unique. Duplicate of resume_structure." +
+            firstIndex +
+            ".section_id.",
+        });
+      })
       .optional()
       .describe(
         "Defines the order sections appear in the resume. Each section gets a position_index (0-based). Lower indices appear first. Use default section IDs (e.g., 'summary', 'employment') or custom section IDs from custom_sections array"

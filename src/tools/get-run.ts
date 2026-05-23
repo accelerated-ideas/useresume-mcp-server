@@ -41,7 +41,9 @@ RETURNS:
                 file_url_expires_at: result.data.file_url_expires_at
                   ? new Date(result.data.file_url_expires_at).toISOString()
                   : null,
-                file_expires_at: new Date(result.data.file_expires_at).toISOString(),
+                file_expires_at: result.data.file_expires_at
+                  ? new Date(result.data.file_expires_at).toISOString()
+                  : null,
                 file_size_bytes: result.data.file_size_bytes,
                 created_at: new Date(result.data.created_at).toISOString(),
               },

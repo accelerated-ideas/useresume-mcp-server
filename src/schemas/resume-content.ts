@@ -1,19 +1,53 @@
 import { z } from "zod";
-import { nanoid } from "nanoid";
+
+function addDuplicateSectionIdIssues({
+  items,
+  ctx,
+  buildMessage,
+}: {
+  items: Array<{ section_id?: string }>;
+  ctx: z.RefinementCtx;
+  buildMessage: (firstIndex: number) => string;
+}) {
+  const seenSectionIds = new Map<string, number>();
+
+  items.forEach((item, index) => {
+    const sectionId = item.section_id?.trim();
+
+    if (!sectionId) {
+      return;
+    }
+
+    const firstIndex = seenSectionIds.get(sectionId);
+
+    if (firstIndex !== undefined) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: [index, "section_id"],
+        message: buildMessage(firstIndex),
+      });
+      return;
+    }
+
+    seenSectionIds.set(sectionId, index);
+  });
+}
 
 const apiSchemaCustomSectionsArray = z
   .array(
     z.object({
       section_id: z
-        .string()
+        .string({
+          invalid_type_error: "Section ID must be a string",
+        })
         .max(50, { message: "Section ID cannot exceed 50 characters" })
-        .default(nanoid())
+        .optional()
         .describe(
           "Unique identifier for the custom section (auto-generated if not provided). Used to reference this section in resume_structure for positioning"
         ),
       section_name: z
         .string()
-        .max(250, { message: "Section name cannot exceed 250 characters" })
+        .max(500, { message: "Section name cannot exceed 500 characters" })
         .describe("Display name for the custom section"),
       section: z
         .array(
@@ -37,12 +71,12 @@ const apiSchemaCustomSectionsArray = z
                 .describe("Whether item is current/ongoing"),
               name: z
                 .string()
-                .max(250, { message: "Name cannot exceed 250 characters" })
+                .max(500, { message: "Name cannot exceed 500 characters" })
                 .optional()
                 .describe("Item name"),
               location: z
                 .string()
-                .max(250, { message: "Location cannot exceed 250 characters" })
+                .max(500, { message: "Location cannot exceed 500 characters" })
                 .optional()
                 .describe("Set the location"),
               short_description: z
@@ -75,6 +109,16 @@ const apiSchemaCustomSectionsArray = z
     })
   )
   .max(10, { message: "Cannot add more than 10 custom sections" })
+  .superRefine((sections, ctx) => {
+    addDuplicateSectionIdIssues({
+      items: sections,
+      ctx,
+      buildMessage: (firstIndex) =>
+        "Custom section IDs must be unique. Duplicate of custom_sections." +
+        firstIndex +
+        ".section_id.",
+    });
+  })
   .optional()
   .describe(
     "Besides the default sections like Education, Skills, etc., you can add custom sections to the resume"
@@ -100,7 +144,7 @@ export const schemaResumeContent = z
             .describe("Link URL"),
           name: z
             .string()
-            .max(250, { message: "Link name cannot exceed 250 characters" })
+            .max(500, { message: "Link name cannot exceed 500 characters" })
             .optional()
             .describe("Link display name"),
         })
@@ -122,12 +166,12 @@ export const schemaResumeContent = z
       .describe("Your professional role or job title"),
     email: z
       .string()
-      .max(250, { message: "Email cannot exceed 250 characters" })
+      .max(500, { message: "Email cannot exceed 500 characters" })
       .optional()
       .describe("Your email address"),
     phone: z
       .string()
-      .max(250, { message: "Phone number cannot exceed 250 characters" })
+      .max(500, { message: "Phone number cannot exceed 500 characters" })
       .optional()
       .describe("Your phone number"),
     address: z
@@ -161,17 +205,17 @@ export const schemaResumeContent = z
             .describe("Whether this is the current job"),
           title: z
             .string()
-            .max(250, { message: "Title cannot exceed 250 characters" })
+            .max(500, { message: "Title cannot exceed 500 characters" })
             .optional()
             .describe("Job title"),
           company: z
             .string()
-            .max(250, { message: "Company name cannot exceed 250 characters" })
+            .max(500, { message: "Company name cannot exceed 500 characters" })
             .optional()
             .describe("Company name"),
           location: z
             .string()
-            .max(250, { message: "Location cannot exceed 250 characters" })
+            .max(500, { message: "Location cannot exceed 500 characters" })
             .optional()
             .describe("Job location"),
           short_description: z
@@ -245,19 +289,19 @@ export const schemaResumeContent = z
             .describe("Whether currently studying"),
           degree: z
             .string()
-            .max(250, { message: "Degree cannot exceed 250 characters" })
+            .max(500, { message: "Degree cannot exceed 500 characters" })
             .optional()
             .describe("Degree name"),
           institution: z
             .string()
-            .max(250, {
-              message: "Institution name cannot exceed 250 characters",
+            .max(500, {
+              message: "Institution name cannot exceed 500 characters",
             })
             .optional()
             .describe("Institution name"),
           location: z
             .string()
-            .max(250, { message: "Location cannot exceed 250 characters" })
+            .max(500, { message: "Location cannot exceed 500 characters" })
             .optional()
             .describe("Institution location"),
           short_description: z
@@ -308,15 +352,15 @@ export const schemaResumeContent = z
             .describe("Whether certification does not expire"),
           name: z
             .string()
-            .max(250, {
-              message: "Certification name cannot exceed 250 characters",
+            .max(500, {
+              message: "Certification name cannot exceed 500 characters",
             })
             .optional()
             .describe("Certification name"),
           institution: z
             .string()
-            .max(250, {
-              message: "Institution name cannot exceed 250 characters",
+            .max(500, {
+              message: "Institution name cannot exceed 500 characters",
             })
             .optional()
             .describe("Issuing institution"),
@@ -332,7 +376,7 @@ export const schemaResumeContent = z
         z.object({
           language: z
             .string()
-            .max(250, { message: "Language name cannot exceed 250 characters" })
+            .max(500, { message: "Language name cannot exceed 500 characters" })
             .optional()
             .describe("Language name"),
           display_proficiency: z
@@ -357,27 +401,27 @@ export const schemaResumeContent = z
         z.object({
           name: z
             .string()
-            .max(250, { message: "Name cannot exceed 250 characters" })
+            .max(500, { message: "Name cannot exceed 500 characters" })
             .optional()
             .describe("Reference name"),
           title: z
             .string()
-            .max(250, { message: "Title cannot exceed 250 characters" })
+            .max(500, { message: "Title cannot exceed 500 characters" })
             .optional()
             .describe("Reference job title"),
           company: z
             .string()
-            .max(250, { message: "Company name cannot exceed 250 characters" })
+            .max(500, { message: "Company name cannot exceed 500 characters" })
             .optional()
             .describe("Reference company"),
           email: z
             .string()
-            .max(250, { message: "Email cannot exceed 250 characters" })
+            .max(500, { message: "Email cannot exceed 500 characters" })
             .optional()
             .describe("Reference email"),
           phone: z
             .string()
-            .max(250, { message: "Phone number cannot exceed 250 characters" })
+            .max(500, { message: "Phone number cannot exceed 500 characters" })
             .optional()
             .describe("Reference phone number"),
         })
@@ -392,7 +436,7 @@ export const schemaResumeContent = z
         z.object({
           name: z
             .string()
-            .max(250, { message: "Name cannot exceed 250 characters" })
+            .max(500, { message: "Name cannot exceed 500 characters" })
             .optional()
             .describe("Project name"),
           short_description: z
@@ -426,7 +470,7 @@ export const schemaResumeContent = z
         z.object({
           name: z
             .string()
-            .max(250, { message: "Name cannot exceed 250 characters" })
+            .max(500, { message: "Name cannot exceed 500 characters" })
             .optional()
             .describe("Activity name"),
           short_description: z
@@ -444,64 +488,64 @@ export const schemaResumeContent = z
     // #### Section names
     summary_section_name: z
       .string()
-      .max(250, {
-        message: "Section name cannot exceed 250 characters",
+      .max(500, {
+        message: "Section name cannot exceed 500 characters",
       })
       .optional()
       .describe("Custom name for the summary section"),
     employment_section_name: z
       .string()
-      .max(250, {
-        message: "Section name cannot exceed 250 characters",
+      .max(500, {
+        message: "Section name cannot exceed 500 characters",
       })
       .optional()
       .describe("Custom name for the employment section"),
     skills_section_name: z
       .string()
-      .max(250, {
-        message: "Section name cannot exceed 250 characters",
+      .max(500, {
+        message: "Section name cannot exceed 500 characters",
       })
       .optional()
       .describe("Custom name for the skills section"),
     education_section_name: z
       .string()
-      .max(250, {
-        message: "Section name cannot exceed 250 characters",
+      .max(500, {
+        message: "Section name cannot exceed 500 characters",
       })
       .optional()
       .describe("Custom name for the education section"),
     certifications_section_name: z
       .string()
-      .max(250, {
-        message: "Section name cannot exceed 250 characters",
+      .max(500, {
+        message: "Section name cannot exceed 500 characters",
       })
       .optional()
       .describe("Custom name for the certifications section"),
     languages_section_name: z
       .string()
-      .max(250, {
-        message: "Section name cannot exceed 250 characters",
+      .max(500, {
+        message: "Section name cannot exceed 500 characters",
       })
       .optional()
       .describe("Custom name for the languages section"),
     projects_section_name: z
       .string()
-      .max(250, {
-        message: "Section name cannot exceed 250 characters",
+      .max(500, {
+        message: "Section name cannot exceed 500 characters",
       })
       .optional()
       .describe("Custom name for the projects section"),
     activities_section_name: z
       .string()
-      .max(250, {
-        message: "Section name cannot exceed 250 characters",
+      .max(500, {
+        message: "Section name cannot exceed 500 characters",
       })
       .optional()
       .describe("Custom name for the activities section"),
     references_section_name: z
       .string()
-      .max(250, {
-        message: "Section name cannot exceed 250 characters",
+      .max(500, {
+        message: "Section name cannot exceed 500 characters",
       })
       .optional()
       .describe("Custom name for the references section"),
@@ -510,43 +554,43 @@ export const schemaResumeContent = z
     // #### Extra fields
     date_of_birth: z
       .string()
-      .max(250, {
-        message: "Date of birth cannot exceed 250 characters",
+      .max(500, {
+        message: "Date of birth cannot exceed 500 characters",
       })
       .optional()
       .describe("Date of birth"),
     marital_status: z
       .string()
-      .max(250, {
-        message: "Marital status cannot exceed 250 characters",
+      .max(500, {
+        message: "Marital status cannot exceed 500 characters",
       })
       .optional()
       .describe("Marital status"),
     passport_or_id: z
       .string()
-      .max(250, {
-        message: "Passport or ID cannot exceed 250 characters",
+      .max(500, {
+        message: "Passport or ID cannot exceed 500 characters",
       })
       .optional()
       .describe("Passport or ID number"),
     nationality: z
       .string()
-      .max(250, {
-        message: "Nationality cannot exceed 250 characters",
+      .max(500, {
+        message: "Nationality cannot exceed 500 characters",
       })
       .optional()
       .describe("Nationality"),
     visa_status: z
       .string()
-      .max(250, {
-        message: "Visa status cannot exceed 250 characters",
+      .max(500, {
+        message: "Visa status cannot exceed 500 characters",
       })
       .optional()
       .describe("Visa status"),
     pronouns: z
       .string()
-      .max(250, {
-        message: "Pronouns cannot exceed 250 characters",
+      .max(500, {
+        message: "Pronouns cannot exceed 500 characters",
       })
       .optional()
       .describe("Personal pronouns"),

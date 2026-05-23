@@ -24,8 +24,8 @@ export const schemaGetRunResponse = z.object({
     status: schemaRunStatus.describe("Current status of the run: 'success', 'error', or 'in_progress'"),
     file_url: z.string().nullable().optional().describe("URL to download the generated file (only present when status is 'success')"),
     file_url_expires_at: z.number().nullable().optional().describe("Timestamp when the file URL expires (milliseconds)"),
-    file_expires_at: z.number().describe("Timestamp when the file itself expires (milliseconds)"),
-    file_size_bytes: z.number().describe("Size of the generated file in bytes"),
+    file_expires_at: z.number().nullable().describe("Timestamp when the file itself expires (milliseconds)"),
+    file_size_bytes: z.number().nullable().describe("Size of the generated file in bytes"),
   }),
 });
 

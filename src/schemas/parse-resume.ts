@@ -228,12 +228,12 @@ export const schemaParseResumeResponseData = z
         "Extracurricular activities, volunteer work, hobbies, or community involvement"
       ),
     // Extra fields
-    date_of_birth: z.string().nullable().describe("Date of birth"),
-    marital_status: z.string().nullable().describe("Marital status"),
-    passport_or_id: z.string().nullable().describe("Passport or ID number"),
-    nationality: z.string().nullable().describe("Nationality"),
-    visa_status: z.string().nullable().describe("Visa status"),
-    pronouns: z.string().nullable().describe("Personal pronouns"),
+    date_of_birth: z.string().nullable().optional().describe("Date of birth"),
+    marital_status: z.string().nullable().optional().describe("Marital status"),
+    passport_or_id: z.string().nullable().optional().describe("Passport or ID number"),
+    nationality: z.string().nullable().optional().describe("Nationality"),
+    visa_status: z.string().nullable().optional().describe("Visa status"),
+    pronouns: z.string().nullable().optional().describe("Personal pronouns"),
   })
   .describe("The resume data object containing all resume content");
 
